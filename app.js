@@ -47,7 +47,6 @@ app.get('/pdftohtml/:uri', function(request, response) {
   requestlib(request_uri).pipe(ws);
   ws.on('close', function () {
     console.log(id + ": file written to disk at " + filepath);
-      response.write('Processing');
       var options = {
         cwd: "./vendor/poppler/poppler-0.22.0/poppler"
       }

@@ -20,6 +20,7 @@ app.get('/pdftotext/:uri', function(request, response) {
   requestlib(request_uri).pipe(ws);
   ws.on('close', function () {
     console.log(id + ": file written to disk at " + filepath);
+      response.write('Processing');
       pdf = new pdftotext(filepath);
 
       pdf.getText(function(err, data, cmd) {

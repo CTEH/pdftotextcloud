@@ -12,7 +12,7 @@ app.get('/', function(request, response) {
 app.get('/pdftotext/:uri', function(request, response) {
   var request_uri = request.params.uri;
   var id = request.id;
-  var filepath = "tmp/" + id + ".pdf";
+  var filepath = "/tmp/" + id + ".pdf";
 
   console.log(id + ": request for url " + request_uri + " from " + request.ip);
 

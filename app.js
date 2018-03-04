@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var pdftotext = require('pdftotextjs');
+var pdftohtml = require('pdf-html-extract');
 var requestlib = require('request');
 var fs = require('fs');
 
@@ -31,6 +32,31 @@ app.get('/pdftotext/:uri', function(request, response) {
           response.send(data);
         }
       });
+  });
+});
+
+app.get('/pdftohtml/:uri', function(request, response) {
+  var request_uri = request.params.uri;
+  var id = request.id;
+  var filepath = "/tmp/" + id + ".pdf";
+
+  console.log(id + ": request for url " + request_uri + " from " + request.ip);
+
+  var ws = fs.createWriteStream(filepath);
+  requestlib(request_uri).pipe(ws);
+  ws.on('close', function () {
+    console.log(id + ": file written to disk at " + filepath);
+      response.write('Processing');
+      var options = {
+        cwd: "./vendor/poppler/poppler-0.22.0/poppler"
+      }
+      pdftohtml(filepath, options, function (err, pages) {
+        if (err) {
+          console.dir(err)
+          return
+        }
+        response.send(pages);
+      })
   });
 });
 

@@ -5,6 +5,7 @@ var requestlib = require('request');
 var fs = require('fs');
 
 app.use(require('connect-requestid'));
+app.use(express.static('trial'));
 app.get('/', function(request, response) {
   response.send("Use format /pdftotext/:uri -- <a href='/pdftotext/http%3A%2F%2Fbootandshoeservice.com%2Fwp-content%2Fuploads%2F2013%2F04%2FDinner4-30.pdf'>example</a>");
 });
